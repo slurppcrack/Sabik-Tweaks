@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Sabik TWEAKS </title>
+    <style>
+        @import url('https://googleapis.com');
+
+        :root {
+            --bg: #0d0c10;
+            --text: #c5b9e2;
+            --accent: #9575cd;
+            --noise: url('https://replicate.delivery');
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+        }
+
+        /* --- ЭФФЕКТЫ ФОНА --- */
+        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: var(--noise); opacity: 0.04; pointer-events: none; z-index: 1; }
+        .vignette { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.7) 100%); pointer-events: none; z-index: 2; }
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02)); background-size: 100% 3px, 2px 100%; pointer-events: none; z-index: 3; }
+        #dust-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 4; opacity: 0.3; }
+
+        /* --- КОНТЕНТ --- */
+        .wrapper {
+            width: 100%; height: 100%;
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+            position: relative; z-index: 10;
+        }
+
+        section {
+            width: 100%; height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 20px; box-sizing: border-box;
+        }
+
+        .lofi-card {
+            background: rgba(20, 18, 24, 0.6);
+            border: 1px solid rgba(149, 117, 205, 0.2);
+            padding: 50px; border-radius: 12px;
+            backdrop-filter: blur(15px);
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            width: 100%; max-width: 500px;
+        }
+
+        .btn, .back-link, .item {
+            background: rgba(149, 117, 205, 0.05); 
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 25px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 10px;
+            display: block;
+            text-decoration: none;
+            text-align: left;
+        }
+
+        .btn:hover, .back-link:hover, .item:hover {
+            background: var(--accent);
+            color: var(--bg);
+            box-shadow: 0 0 25px var(--accent);
+            transform: scale(1.03) translateY(-2px);
+        }
+
+        h2 { font-weight: normal; margin-bottom: 30px; letter-spacing: 5px; text-align: center; }
+        .center-btn { text-align: center !important; }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="dust-canvas"></canvas>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+
+    <div class="wrapper" id="wrapper">
+        
+        <!-- ГЛАВНАЯ (СТРАНИЦА 0) -->
+        <section id="home">
+            <div class="lofi-card">
+                <h1 style="letter-spacing: 8px;">~ Sabik TWEKAS ~</h1>
+                <p style="opacity: 0.5; font-size: 13px; margin-bottom: 35px;">THE BEST TWEAKS FOR: 0 DELAY/BETTER FPS AND LOW PING.</p>
+                <div style="display: flex; flex-direction: column; gap: 5px; width: 100%;">
+                    <button class="btn center-btn" onclick="swipeTo(1)">Assortment</button>
+                    <button class="btn center-btn" onclick="swipeTo(2)">Contact Support</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- АССОРТИМЕНТ (СТРАНИЦА 1) -->
+        <section id="assortment">
+            <div class="lofi-card">
+                <h2>Assortment</h2>
+                <div style="width: 100%; margin-bottom: 25px;">
+    <a href="https://t.me/sabikfnz" target="_blank" class="item">> Sabik Lite — 3$</a>
+    <a href="https://t.me/sabikfnz" target="_blank" class="item">> Sabik BIOS — 7$</a>
+    <a href="https://t.me/sabikfnz" target="_blank" class="item">> Sabik Ultimate — 6$</a>
+    <a href="https://t.me/sabikfnz" target="_blank" class="item">> Sabik ULTRA — 8$</a>
+    <a href="https://t.me/sabikfnz" target="_blank" class="item">> Sabik Tweaks — 5$</a>
+</div>
+
+                <button class="back-link center-btn" onclick="swipeTo(0)">RETURN</button>
+            </div>
+        </section>
+
+        <!-- ВЫБОР САППОРТА (СТРАНИЦА 2) -->
+        <section id="support">
+            <div class="lofi-card">
+                <h2>Support</h2>
+                <p style="opacity: 0.5; font-size: 11px; margin-bottom: 20px;">// select administrator</p>
+                <div style="width: 100%; margin-bottom: 25px;">
+                    <a href="https://t.me/sabikfnz" target="_blank" class="item">>  Admin </a>
+                    <a href="https://t.me/slurppwhy" target="_blank" class="item">> Tweaker </a>
+                </div>
+                <button class="back-link center-btn" onclick="swipeTo(0)">RETURN</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function swipeTo(index) {
+            document.getElementById('wrapper').style.transform = `translateY(-${index * 100}vh)`;
+        }
+
+        const canvas = document.getElementById('dust-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let dustArray = [];
+        for (let i = 0; i < 60; i++) {
+            dustArray.push({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                size: Math.random() * 1.2, speedX: Math.random() * 0.4 - 0.2, speedY: Math.random() * 0.4 - 0.2
+            });
+        }
+        function animateDust() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(197, 185, 226, 0.3)";
+            dustArray.forEach(p => {
+                p.x += p.speedX; p.y += p.speedY;
+                if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+            });
+            requestAnimationFrame(animateDust);
+        }
+        animateDust();
+    </script>
+</body>
+</html>
